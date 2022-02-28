@@ -1,8 +1,7 @@
-from unittest import TestCase
+import player
+import json
 
-
-
-
-class TestPlayer(TestCase):
-    def test_bet_request(self):
-        self.fail()
+def test_call():
+    subject = player.Player()
+    game_stats = json.load(open('example.json'))
+    assert 240 == subject.betRequest(game_stats)
