@@ -5,7 +5,7 @@ class Player:
     def betRequest(self, game_state):
 
 
-        # first orbit
+        # first orbit -> not valid
             # suited
             # paired
             # connectors
