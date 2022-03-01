@@ -18,7 +18,9 @@ class Player:
         return game_state['current_buy_in'] - game_state['players'][game_state["in_action"]]["bet"]
 
     def showdown(self, game_state):
-        pass
+        print("=================================")
+        print(game_state)
+        print("=================================")
 
     # TODO: is "orbit" correct
     # def is_first_orbit(self, game_state):
