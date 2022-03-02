@@ -28,6 +28,9 @@ class Player:
                 return True
         return False
 
+    def has_pair_hole_cards(self, cards):
+        return cards[0]['rank'] == cards[1]['rank']
+
     def my_cards(self, game_state):
         return game_state['players'][game_state["in_action"]]["hole_cards"]
 
@@ -35,5 +38,6 @@ class Player:
     # def is_first_orbit(self, game_state):
     #     return game_state['orbits'] == 0
     def should_fold(self, game_state):
-        return not self.has_face_card(self.my_cards(game_state))
+        cards = self.my_cards(game_state)
+        return not (self.has_face_card(cards) or self.has_pair_hole_cards(cards))
 

@@ -21,7 +21,12 @@ def test_should_fold():
     game_state = json.load(open('example_should_fold.json'))
     assert subject.should_fold(game_state)
 
-def test_should_not_fold():
+def test_not_fold_because_pairs():
+    subject = player.Player()
+    game_state = json.load(open('example_with_pair.json'))
+    assert not subject.should_fold(game_state)
+
+def test_should_not_fold_because_face_cards():
     subject = player.Player()
     game_state = json.load(open('example_call.json'))
     assert not subject.should_fold(game_state)
