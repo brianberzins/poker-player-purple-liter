@@ -1,3 +1,5 @@
+from collections import Counter
+import numpy
 
 class Player:
     VERSION = "3.3"
@@ -58,6 +60,7 @@ class Player:
         cards.extend(self.community_cards(game_state))
         return cards
 
-    # def should_raise(self, cards):
-    #     map(lambda c: c[], cards)
-
+    def should_raise(self, cards):
+        ranks = list(map(lambda c: c['rank'], cards))
+        counter = Counter(ranks)
+        return max(counter.values()) >= 3
