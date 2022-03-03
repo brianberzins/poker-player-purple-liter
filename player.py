@@ -2,7 +2,7 @@ from collections import Counter
 import numpy
 
 class Player:
-    VERSION = "3.3"
+    VERSION = "4.0"
 
     def betRequest(self, game_state):
         # first orbit -> not valid
@@ -17,8 +17,8 @@ class Player:
         print("bet_index %d" % game_state['bet_index'])
 
         print("hole cards:")
-        print("    %s" % self.my_cards(game_state)[0])
-        print("    %s" % self.my_cards(game_state)[0])
+        for card in self.my_cards(game_state):
+            print("    %s" % card)
 
         print("community cards:")
         for card in self.community_cards(game_state):
@@ -28,8 +28,25 @@ class Player:
             print("folding")
             return 0
 
+        cards = self.get_cards(game_state)
+        if self.should_raise(cards):
+            print("raising")
+            return self.to_call(game_state) + game_state["minimum_raise"]
+        to_call = self.to_call(game_state)
+        if to_call > self.current_bet(game_state) * 2:
+            print(to_call)
+            print(self.current_bet(game_state) * 2)
+            print("too risky - folding")
+            return 0 # fold
+
         print("calling")
-        return game_state['current_buy_in'] - game_state['players'][game_state["in_action"]]["bet"]
+        return self.to_call(game_state)
+
+    def to_call(self, game_state):
+        return game_state['current_buy_in'] - self.current_bet(game_state)
+
+    def current_bet(self, game_state):
+        return game_state['players'][game_state["in_action"]]["bet"]
 
     def showdown(self, game_state):
         print("=================================")
@@ -61,6 +78,9 @@ class Player:
         return cards
 
     def should_raise(self, cards):
-        ranks = list(map(lambda c: c['rank'], cards))
+        card_map = map(lambda c: c['rank'], cards)
+        ranks = list(card_map)
+        print(cards)
+        print(ranks)
         counter = Counter(ranks)
         return max(counter.values()) >= 3
