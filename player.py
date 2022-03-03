@@ -1,8 +1,7 @@
 from collections import Counter
-import numpy
 
 class Player:
-    VERSION = "4.0"
+    VERSION = "4.1"
 
     def betRequest(self, game_state):
         # first orbit -> not valid
