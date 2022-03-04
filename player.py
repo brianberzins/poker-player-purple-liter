@@ -1,7 +1,7 @@
 from collections import Counter
 
 class Player:
-    VERSION = "5.2"
+    VERSION = "5.3"
 
     def betRequest(self, game_state):
         # first orbit -> not valid
@@ -27,9 +27,9 @@ class Player:
             print("folding")
             return 0
         to_call = self.to_call(game_state)
-        if to_call > self.current_bet(game_state) * 2:
+        if to_call > self.current_bet(game_state) * (2 + self.players_out(game_state)):
             print(to_call)
-            print(self.current_bet(game_state) * 2)
+            print(self.current_bet(game_state) * 2 )
             print("too risky - folding")
             return 0 # fold
         cards = self.get_cards(game_state)
@@ -38,6 +38,13 @@ class Player:
             return self.to_call(game_state) + game_state["minimum_raise"]
         print("calling")
         return self.to_call(game_state)
+
+    def players_out(self, game_state):
+        players_out = 0
+        for player in game_state['players']:
+            if player['status'] == 'out':
+                players_out = players_out + 1
+        return players_out
 
     def to_call(self, game_state):
         return game_state['current_buy_in'] - self.current_bet(game_state)
