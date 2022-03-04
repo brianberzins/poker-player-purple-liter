@@ -57,6 +57,11 @@ def test_too_risky():
     game_stats = json.load(open('example_too_risky.json'))
     assert 0 == subject.betRequest(game_stats)
 
+def test_too_risky2():
+    subject = Player()
+    game_stats = json.load(open('example_too_risky2.json'))
+    assert 0 == subject.betRequest(game_stats)
+
 # def test_bet_first_round():
 #     subject = Player()
 #     game_stats = json.load(open('example_should_fold.json'))
