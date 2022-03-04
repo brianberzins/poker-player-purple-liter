@@ -65,6 +65,9 @@ def test_too_risky2():
 def test_flush_chance():
     assert Player().should_raise(json.load(open('example_flush_chance.json')))
 
+def test_two_pair():
+    assert Player().should_raise(json.load(open('example_two_pair.json')))
+
 # def test_bet_first_round():
 #     subject = Player()
 #     game_stats = json.load(open('example_should_fold.json'))

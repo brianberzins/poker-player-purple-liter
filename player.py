@@ -1,7 +1,7 @@
 from collections import Counter
 
 class Player:
-    VERSION = "5.1"
+    VERSION = "5.2"
 
     def betRequest(self, game_state):
         # first orbit -> not valid
@@ -83,9 +83,17 @@ class Player:
         if max(counter.values()) >= 3:
             return True
 
+        pairs_or_better = 0
+        for value in counter.values():
+            if value >= 2:
+                pairs_or_better = pairs_or_better + 1
+        if pairs_or_better >= 2:
+            return True
+
         card_map = map(lambda c: c['suit'], cards)
         suits = list(card_map)
         counter = Counter(suits)
         if max(counter.values()) >= 4:
             return True
+
         return False
